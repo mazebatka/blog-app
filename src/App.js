@@ -17,6 +17,7 @@ export const App = () => {
         <Route path="/blogs/:id" element={<BlogPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
