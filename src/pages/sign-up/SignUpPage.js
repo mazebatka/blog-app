@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Signup.css";
+import "./SignUpPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, TextField } from "../../components";
 import { signUpFunction } from "../../firebase";
