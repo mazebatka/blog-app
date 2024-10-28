@@ -6,6 +6,8 @@ import {
   HomePage,
   NotFoundPage,
   ContactUsPage,
+  SignInPage,
+  SignUpPage,
 } from "./pages";
 
 export const App = () => {
