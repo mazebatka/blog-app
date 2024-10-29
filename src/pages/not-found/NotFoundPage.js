@@ -1,5 +1,5 @@
 import React from "react";
-import { Footer, Header } from "../../components";
+import { Button, Footer, Header } from "../../components";
 import "./NotFoundPage.css";
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const NotFoundPage = () => {
           </p>
 
           <Link to="/">
-            <button>Back To Home</button>
+            <Button>Back To Home</Button>
           </Link>
         </div>
       </div>
