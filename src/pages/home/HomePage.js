@@ -1,4 +1,5 @@
 import React from "react";
+import { CircularProgress } from "@mui/material";
 import { Header, Footer, Button } from "../../components";
 import { useUserContext } from "../../context";
 import { signOutFunction } from "../../firebase";
@@ -22,7 +23,7 @@ export const HomePage = () => {
           justifyContent: "center",
         }}
       >
-        Loading ...
+        <CircularProgress />
       </div>
     );
   }
