@@ -4,46 +4,43 @@ import { Box, CircularProgress } from "@mui/material";
 import { TextField } from "../textfield";
 import { Button } from "../button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
-import { blogsCollection } from "../../firebase";
-import { useUserContext } from "../../context";
+import { tagsCollection } from "../../firebase";
 
-export const CreateBlogModal = (props) => {
+export const CreateTagModal = (props) => {
   const { open, handleClose } = props;
-  const { currentUser } = useUserContext();
-  const [blogData, setBlogData] = useState({
-    title: "",
+  const [tagData, setTagData] = useState({
+    name: "",
     description: "",
-    content: "",
+    color: "#26E6FF",
   });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setBlogData({ ...blogData, [name]: value });
+    setTagData({ ...tagData, [name]: value });
   };
 
   const handleSubmit = async () => {
     if (
-      blogData.content === "" ||
-      blogData.description === "" ||
-      blogData.title === ""
+      tagData.name === "" ||
+      tagData.description === "" ||
+      tagData.color === ""
     ) {
       alert("Please fill all the fields!");
     } else {
       setLoading(true);
 
-      await addDoc(blogsCollection, {
-        userId: currentUser.uid,
-        title: blogData.title,
-        description: blogData.description,
-        context: blogData.content,
+      await addDoc(tagsCollection, {
+        name: tagData.name,
+        description: tagData.description,
+        color: tagData.color,
         createdAt: serverTimestamp(),
       });
 
-      setBlogData({
-        title: "",
+      setTagData({
+        name: "",
         description: "",
-        content: "",
+        color: "",
       });
 
       handleClose();
@@ -71,26 +68,26 @@ export const CreateBlogModal = (props) => {
             gap: "10px",
           }}
         >
-          <h2 style={{ margin: 0 }}>Create Blog</h2>
+          <h2 style={{ margin: 0 }}>Create Tag</h2>
           <TextField
             type="text"
-            name="title"
-            placeholder="Title..."
-            value={blogData.title}
+            name="name"
+            placeholder="Name..."
+            value={tagData.name}
             onChange={handleChange}
           />
           <TextField
             type="text"
             name="description"
             placeholder="Description..."
-            value={blogData.description}
+            value={tagData.description}
             onChange={handleChange}
           />
-          <TextField
-            type="text"
-            name="content"
-            placeholder="Content..."
-            value={blogData.content}
+
+          <input
+            type="color"
+            name="color"
+            value={tagData.color}
             onChange={handleChange}
           />
 

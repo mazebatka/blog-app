@@ -1,11 +1,13 @@
-#blogs-container{
+#blogs-container {
     max-width: 1200px;
     margin: 0 auto;
     min-width: 800px;
-    padding:0 40px;
-}
-#create-blog{
+    padding: 0 40px;
+  }
+  
+  #create-blog {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-}
+    gap: 20px;
+  }
