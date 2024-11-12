@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "./Modal";
 import { Box, CircularProgress } from "@mui/material";
-import { TextField } from "../textfield";
+import { TextField } from "../text-field";
 import { Button } from "../button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
 import { tagsCollection } from "../../firebase";
