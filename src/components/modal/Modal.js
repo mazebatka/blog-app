@@ -6,7 +6,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "400px",
   borderRadius: "8px",
   bgcolor: "background.paper",
   p: 4,
@@ -14,7 +14,7 @@ const style = {
 };
 
 export const Modal = (props) => {
-  const { open, handleClose, children } = props;
+  const { open, handleClose, children, size } = props;
   return (
     <MuiModal
       open={open}
@@ -22,7 +22,14 @@ export const Modal = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>{children}</Box>
+      <Box
+        sx={{
+          ...style,
+          width: size ? size : "400px",
+        }}
+      >
+        {children}
+      </Box>
     </MuiModal>
   );
 };

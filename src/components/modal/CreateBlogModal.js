@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal } from "./Modal";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, MenuItem, Select } from "@mui/material";
 import { TextField } from "../text-field";
 import { Button } from "../button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
@@ -57,7 +57,7 @@ export const CreateBlogModal = (props) => {
   };
 
   return (
-    <Modal open={open} handleClose={handleClose}>
+    <Modal open={open} handleClose={handleClose} size={"600px"}>
       {tagLoading || loading ? (
         <Box
           sx={{
@@ -98,6 +98,28 @@ export const CreateBlogModal = (props) => {
             value={blogData.content}
             onChange={handleChange}
           />
+          <Select
+            value={blogData.tag}
+            name="tag"
+            onChange={handleChange}
+            inputProps={{ "aria-label": "Without label" }}
+            displayEmpty
+            sx={{
+              height: "37px",
+              borderRadius: "8px",
+              fontSize: "14px",
+            }}
+          >
+            <MenuItem value="">
+              {tags.length === 0 ? "No Tag" : "Choose Tag..."}
+            </MenuItem>
+
+            {tags?.map((tag) => (
+              <MenuItem value={tag.tagId} key={tag.tagId}>
+                {tag.name}
+              </MenuItem>
+            ))}
+          </Select>
           {tags.length === 0
             ? "Add new tag"
             : tags.map((tag, index) => <div key={index}>{tag.name} </div>)}

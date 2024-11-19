@@ -49,7 +49,7 @@ export const CreateTagModal = (props) => {
   };
 
   return (
-    <Modal open={open} handleClose={handleClose}>
+    <Modal open={open} handleClose={handleClose} size={"400px"}>
       {loading ? (
         <Box
           sx={{
@@ -91,7 +91,7 @@ export const CreateTagModal = (props) => {
             onChange={handleChange}
           />
 
-          <Box sx={{ display: "flex", gap: "60px" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Button onClick={handleClose}>Cancel</Button>
             <Button onClick={handleSubmit}>Create</Button>
           </Box>
