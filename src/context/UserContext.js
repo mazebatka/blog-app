@@ -25,7 +25,7 @@ export const UserContextProvider = (props) => {
 
     return () => getUser();
   }, []);
-
+  console.log(currentUser);
   return (
     <UserContext.Provider value={{ currentUser, isUserLoggedIn, loading }}>
       {children}

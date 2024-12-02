@@ -38,11 +38,12 @@ export const CreateBlogModal = (props) => {
       setLoading(true);
 
       await addDoc(blogsCollection, {
-        userId: currentUser.uid,
         title: blogData.title,
         description: blogData.description,
         content: blogData.content,
         createdAt: serverTimestamp(),
+        userId: currentUser.uid,
+        tagId: blogData.tag,
       });
 
       setBlogData({
@@ -139,7 +140,6 @@ export const CreateBlogModal = (props) => {
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-end",
                 justifyContent: "space-between",
               }}
             >
