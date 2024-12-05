@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { CircularProgress } from "@mui/material";
-import { Header, Footer, Button, Card } from "../../components";
+import { Header, Footer, Card, TrendingCard } from "../../components";
 import { useBlogContext, useTagContext, useUserContext } from "../../context";
-import { signOutFunction } from "../../firebase";
+
 import "./HomePage.css";
 
 export const HomePage = () => {
@@ -15,9 +15,9 @@ export const HomePage = () => {
     ? blogs.filter((blog) => selectedTagId === blog.tagId)
     : blogs;
 
-  const handleSignOut = async () => {
-    await signOutFunction();
-  };
+  const trendingBlogs = [...blogs]
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, 4);
 
   if (loading || blogsLoading || tagLoading) {
     return (
@@ -40,17 +40,24 @@ export const HomePage = () => {
       <Header />
 
       <div id="home-container">
-        {currentUser ? (
-          <>
-            <h3>Welcome back, {currentUser.displayName}!</h3>
-            <Button onClick={handleSignOut} style={{ width: "100px" }}>
-              Sign out
-            </Button>
-          </>
-        ) : (
-          <h3>Welcome, Guest!</h3>
-        )}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            margin: "50px 0px",
+          }}
+        >
+          <h2>Trending</h2>
 
+          <div style={{ display: "flex", gap: "20px" }}>
+            {trendingBlogs.map((blog, index) => (
+              <div key={index}>
+                <TrendingCard blog={blog} />
+              </div>
+            ))}
+          </div>
+        </div>
         <div
           style={{
             display: "flex",

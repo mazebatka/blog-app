@@ -2,8 +2,17 @@ import React from "react";
 import "./Header.css";
 import { Logo, SearchIcon } from "../../assets";
 import { Link } from "react-router-dom";
+import { Button } from "../button";
+import { useUserContext } from "../../context";
+
+import { signOutFunction } from "../../firebase";
+
+const handleSignOut = async () => {
+  await signOutFunction();
+};
 
 export const Header = () => {
+  const { currentUser } = useUserContext();
   return (
     <div id="header-container">
       <Link to="/">
@@ -23,6 +32,38 @@ export const Header = () => {
         >
           Contact
         </Link>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          alignItems: "center",
+          direction: "row",
+        }}
+      >
+        {currentUser ? (
+          <>
+            <h3>{currentUser.displayName}!</h3>
+            <Button onClick={handleSignOut} style={{ width: "100px" }}>
+              Sign out
+            </Button>
+          </>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              alignItems: "center",
+              direction: "row",
+            }}
+          >
+            <h3> Guest!</h3>
+            <Link to="/sign-in" style={{ textDecoration: "none" }}>
+              Sign in!
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="search-container">

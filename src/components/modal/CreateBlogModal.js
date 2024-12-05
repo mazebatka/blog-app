@@ -7,6 +7,7 @@ import { addDoc, serverTimestamp } from "firebase/firestore";
 import { blogsCollection } from "../../firebase";
 import { useTagContext, useUserContext } from "../../context";
 import { CreateTagModal } from "./CreateTagModal";
+import { uploadImage } from "../../cloudinary";
 
 export const CreateBlogModal = (props) => {
   const { open, handleClose } = props;
@@ -16,9 +17,12 @@ export const CreateBlogModal = (props) => {
     title: "",
     description: "",
     content: "",
+    tag: "",
   });
   const [loading, setLoading] = useState(false);
   const [openTag, setOpenTag] = useState(false);
+  const [file, setFile] = useState();
+
   const handleOpenTag = () => setOpenTag(true);
   const handleCloseTag = () => setOpenTag(false);
 
@@ -31,16 +35,19 @@ export const CreateBlogModal = (props) => {
     if (
       blogData.content === "" ||
       blogData.description === "" ||
-      blogData.title === ""
+      blogData.title === "" ||
+      !file
     ) {
       alert("Please fill all the fields!");
     } else {
       setLoading(true);
+      const previewLink = await uploadImage(file);
 
       await addDoc(blogsCollection, {
         title: blogData.title,
         description: blogData.description,
         content: blogData.content,
+        imageURL: previewLink,
         createdAt: serverTimestamp(),
         userId: currentUser.uid,
         tagId: blogData.tag,
@@ -50,10 +57,12 @@ export const CreateBlogModal = (props) => {
         title: "",
         description: "",
         content: "",
+        tag: "",
       });
+      setFile();
+      setLoading(false);
 
       handleClose();
-      setLoading(false);
     }
   };
 
@@ -121,9 +130,8 @@ export const CreateBlogModal = (props) => {
               </MenuItem>
             ))}
           </Select>
-          {tags.length === 0
-            ? "Add new tag"
-            : tags.map((tag, index) => <div key={index}>{tag.name} </div>)}
+
+          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           <Box
             sx={{
               display: "flex",

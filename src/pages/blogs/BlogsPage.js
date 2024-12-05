@@ -19,6 +19,7 @@ export const BlogsPage = () => {
           </Button>
         </div>
       </div>
+
       <CreateBlogModal open={openBlog} handleClose={handleCloseBlog} />
     </div>
   );
