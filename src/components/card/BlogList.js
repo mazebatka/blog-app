@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { doc, deleteDoc, getDocs } from "firebase/firestore";
-import { blogsCollection } from "../../firebase"; // Firebase collection reference
-import { useAuth } from "../../context/AuthContext"; // Current user context
+import { blogsCollection } from "../../firebase";
+import { useUserContext } from "../../context";
+import { Button } from "../button";
 
 export const BlogList = () => {
-  const { currentUser } = useAuth(); // Get the current user
+  const { currentUser } = useUserContext();
   const [blogs, setBlogs] = useState([]);
 
-  // Fetch blogs from Firestore
   const fetchBlogs = async () => {
     const querySnapshot = await getDocs(blogsCollection);
     const blogsData = querySnapshot.docs.map((doc) => ({
-      id: doc.id, // Document ID
-      ...doc.data(), // Blog data
+      id: doc.id,
+      ...doc.data(),
     }));
     setBlogs(blogsData);
   };
 
-  // Delete a blog
   const handleDeleteClick = async (blogId) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
       try {
         await deleteDoc(doc(blogsCollection, blogId));
-        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId)); // Remove blog from state
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== blogId));
         alert("Blog deleted successfully!");
       } catch (error) {
         console.error("Error deleting blog:", error);
@@ -31,7 +30,6 @@ export const BlogList = () => {
     }
   };
 
-  // Load blogs when the component mounts
   useEffect(() => {
     fetchBlogs();
   }, []);
@@ -50,11 +48,9 @@ export const BlogList = () => {
         >
           <h3>{blog.title}</h3>
           <p>{blog.description}</p>
-          <small>
-            By: {blog.userId === currentUser.uid ? "You" : "Another User"}
-          </small>
+          <p>By: {blog.userId === currentUser.uid ? "You" : "Another User"}</p>
           {blog.userId === currentUser.uid && (
-            <button onClick={() => handleDeleteClick(blog.id)}>Delete</button>
+            <Button onClick={() => handleDeleteClick(blog.id)}>Delete</Button>
           )}
         </div>
       ))}

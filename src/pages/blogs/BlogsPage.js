@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, CreateBlogModal, Header } from "../../components";
+import { Button, CreateBlogModal, Header, BlogList } from "../../components";
 import "./BlogsPage.css";
 
 export const BlogsPage = () => {
@@ -17,6 +17,10 @@ export const BlogsPage = () => {
           <Button style={{ width: "120px" }} onClick={handleOpenBlog}>
             Create Blog
           </Button>
+        </div>
+
+        <div id="blogs-list">
+          <BlogList />
         </div>
       </div>
 
