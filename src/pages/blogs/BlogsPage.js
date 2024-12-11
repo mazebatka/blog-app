@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Button, CreateBlogModal, Header, BlogList } from "../../components";
+import { Button, CreateBlogModal, Header, Card } from "../../components";
+import { useBlogContext } from "../../context";
 import "./BlogsPage.css";
 
 export const BlogsPage = () => {
   const [openBlog, setOpenBlog] = useState(false);
+  const { blogs } = useBlogContext();
 
   const handleOpenBlog = () => setOpenBlog(true);
   const handleCloseBlog = () => setOpenBlog(false);
@@ -19,8 +21,19 @@ export const BlogsPage = () => {
           </Button>
         </div>
 
-        <div id="blogs-list">
-          <BlogList />
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 20,
+            marginTop: "60px",
+          }}
+        >
+          {blogs.map((blog, index) => (
+            <div key={index}>
+              <Card blog={blog} />
+            </div>
+          ))}
         </div>
       </div>
 

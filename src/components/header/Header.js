@@ -2,10 +2,10 @@ import React from "react";
 import "./Header.css";
 import { Logo, SearchIcon } from "../../assets";
 import { Link } from "react-router-dom";
-import { Button } from "../button";
 import { useUserContext } from "../../context";
-
 import { signOutFunction } from "../../firebase";
+import { IconButton } from "@mui/material";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const handleSignOut = async () => {
   await signOutFunction();
@@ -45,9 +45,9 @@ export const Header = () => {
         {currentUser ? (
           <>
             <h3>{currentUser.displayName}!</h3>
-            <Button onClick={handleSignOut} style={{ width: "100px" }}>
-              Sign out
-            </Button>
+            <IconButton onClick={handleSignOut} style={{ width: "100px" }}>
+              <ExitToAppIcon />
+            </IconButton>
           </>
         ) : (
           <div

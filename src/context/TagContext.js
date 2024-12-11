@@ -23,8 +23,6 @@ export const TagContextProvider = (props) => {
     return () => unsubscribe();
   }, []);
 
-  console.log(tags);
-
   return (
     <TagContext.Provider value={{ tags, tagLoading }}>
       {children}

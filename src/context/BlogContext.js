@@ -8,7 +8,6 @@ export const BlogContextProvider = (props) => {
   const { children } = props;
   const [blogs, setBlogs] = useState([]);
   const [blogsLoading, setBlogsLoading] = useState(true);
-  console.log(blogs);
   useEffect(() => {
     const unsubscribe = onSnapshot(
       blogsCollection,

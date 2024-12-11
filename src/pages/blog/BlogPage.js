@@ -1,16 +1,36 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBlogContext } from "../../context";
 import { CircularProgress } from "@mui/material";
-import { Footer, Header } from "../../components";
+import {
+  Button,
+  DeleteBlogModal,
+  UpdateBlogModal,
+  Footer,
+  Header,
+} from "../../components";
 import "./BlogPage.css";
 
 export const BlogPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [openDeleteBlog, setOpenDeleteBlog] = useState(false);
+  const [openUpdateBlog, setUpdateBlog] = useState(false);
+  const handleOpenDeleteBlog = () => setOpenDeleteBlog(true);
+  const handleCloseDeleteBlog = () => setOpenDeleteBlog(false);
+  const handleOpenUpdateBlog = () => setUpdateBlog(true);
+  const handleCloseUpdateBlog = () => setUpdateBlog(false);
 
   const { blogs, blogsLoading } = useBlogContext();
 
   const singleBlog = blogs.find((blog) => blog.blogId === id);
+
+  useEffect(() => {
+    if (!blogsLoading && !singleBlog) {
+      navigate("/404", { replace: true });
+    }
+  }, [blogsLoading, singleBlog, navigate]);
 
   if (blogsLoading) {
     return (
@@ -27,6 +47,8 @@ export const BlogPage = () => {
       </div>
     );
   }
+
+  if (!singleBlog) return null;
 
   return (
     <div>
@@ -57,9 +79,35 @@ export const BlogPage = () => {
         <img src={singleBlog.imageURL} width={800} alt={singleBlog.title} />
 
         <p style={{ marginTop: "40px" }}>{singleBlog.content}</p>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: 40,
+          }}
+        >
+          <Button style={{ width: "120px" }} onClick={handleOpenUpdateBlog}>
+            Update
+          </Button>
+          <Button style={{ width: "120px" }} onClick={handleOpenDeleteBlog}>
+            Delete
+          </Button>
+        </div>
       </div>
 
       <Footer />
+
+      <DeleteBlogModal
+        open={openDeleteBlog}
+        handleClose={handleCloseDeleteBlog}
+        blogId={id}
+      />
+      <UpdateBlogModal
+        open={openUpdateBlog}
+        handleClose={handleCloseUpdateBlog}
+        blog={singleBlog}
+      />
     </div>
   );
 };

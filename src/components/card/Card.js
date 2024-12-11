@@ -56,11 +56,13 @@ export const Card = (props) => {
           </span>
         </div>
         <h1 style={{ overflow: "hidden" }}>{blog.title}</h1>
-        {blog.createdAt.toDate().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}
+
+        {blog.createdAt &&
+          blog.createdAt.toDate().toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
       </div>
     </div>
   );
