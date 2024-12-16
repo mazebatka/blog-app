@@ -33,7 +33,12 @@ export const Header = () => {
           Contact
         </Link>
       </div>
-
+      <div className="search-container">
+        <input type="text" className="search-input" placeholder="Search" />
+        <div className="search-icon">
+          <SearchIcon />
+        </div>
+      </div>
       <div
         style={{
           display: "flex",
@@ -64,13 +69,6 @@ export const Header = () => {
             </Link>
           </div>
         )}
-      </div>
-
-      <div className="search-container">
-        <input type="text" className="search-input" placeholder="Search" />
-        <div className="search-icon">
-          <SearchIcon />
-        </div>
       </div>
     </div>
   );
