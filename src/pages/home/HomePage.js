@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { CircularProgress } from "@mui/material";
-import { Header, Footer, Card, TrendingCard } from "../../components";
+import { CircularProgress, IconButton } from "@mui/material";
+import {
+  Header,
+  Footer,
+  Card,
+  TrendingCard,
+  BlogSlide,
+} from "../../components";
 import { useBlogContext, useTagContext, useUserContext } from "../../context";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import "./HomePage.css";
 
@@ -10,6 +18,8 @@ export const HomePage = () => {
   const { blogs, blogsLoading } = useBlogContext();
   const { tags, tagLoading } = useTagContext();
   const [selectedTagId, setSelectedTagId] = useState("");
+
+  const [sliderCount, setSliderCount] = useState(0);
 
   const fitleredBlogs = selectedTagId
     ? blogs.filter((blog) => selectedTagId === blog.tagId)
@@ -40,6 +50,39 @@ export const HomePage = () => {
       <Header />
 
       <div id="home-container">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            margin: "50px 0px",
+          }}
+        >
+          <BlogSlide blog={blogs[sliderCount]} />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <IconButton
+              onClick={() => {
+                setSliderCount((prev) => prev - 1);
+              }}
+              disabled={sliderCount <= 0}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                setSliderCount((prev) => prev + 1);
+              }}
+              disabled={sliderCount >= blogs.length - 1}
+            >
+              <ChevronRightIcon />
+            </IconButton>
+          </div>
+        </div>
         <div
           style={{
             display: "flex",

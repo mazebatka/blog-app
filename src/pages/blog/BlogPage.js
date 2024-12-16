@@ -67,7 +67,7 @@ export const BlogPage = () => {
             alignItems: "center",
           }}
         >
-          <h3>{singleBlog.user.displayName}</h3>
+          <h3>{singleBlog.user?.displayName}</h3>
           <p>
             {singleBlog.createdAt.toDate().toLocaleDateString("en-US", {
               year: "numeric",

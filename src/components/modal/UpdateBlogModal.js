@@ -12,13 +12,7 @@ export const UpdateBlogModal = (props) => {
   const { tags } = useTagContext();
 
   const [blogData, setBlogData] = useState({
-    title: blog.title,
-    description: blog.description,
-    content: blog.content,
-    tagId: blog.tagId,
-    imageURL: blog.imageURL,
-    userId: blog.userId,
-    createdAt: blog.createdAt,
+    ...blog,
   });
   const [loading, setLoading] = useState(false);
 
